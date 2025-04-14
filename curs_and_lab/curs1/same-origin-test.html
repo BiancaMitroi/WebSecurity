@@ -1,0 +1,30 @@
+// same-origin-test.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Same Origin Test</title>
+</head>
+<body>
+    <h1>Same-Origin Policy Test</h1>
+    <p>Open the console to see the results.</p>
+    <script>
+        // Define the localhost and 127.0.0.1 versions of the same server
+        const localhostUrl = 'http://localhost:8000/test.json';
+        const loopbackUrl = 'http://127.0.0.1:8000/test.json';
+
+        // Fetch from localhost
+        fetch(localhostUrl)
+            .then(response => response.json())
+            .then(data => console.log('Localhost response:', data))
+            .catch(error => console.error('Localhost fetch error:', error));
+
+        // Fetch from 127.0.0.1
+        fetch(loopbackUrl)
+            .then(response => response.json())
+            .then(data => console.log('127.0.0.1 response:', data))
+            .catch(error => console.error('127.0.0.1 fetch error:', error));
+    </script>
+</body>
+</html>
