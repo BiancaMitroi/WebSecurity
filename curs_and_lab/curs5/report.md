@@ -34,4 +34,4 @@ For completing the exercise, I've created 3 servers. 1 only for sneding a blind 
 
 For the first and third servers I've run the command `python -m http.server` (inside each folder that contains the code for the servers).
 
-For the seconf one I needed to make a node server and run it with `node server.js` (inside th folder that contains the code for the server).
+For the second one I needed to make a node server and run it with `node server.js` (inside th folder that contains the code for the server).

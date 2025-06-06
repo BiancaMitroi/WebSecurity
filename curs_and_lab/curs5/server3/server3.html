@@ -13,7 +13,7 @@
             <input type="hidden" name="csrf" id="csrfField" value="">
         </form>
     <script>
-        fetch('http://localhost:3000/csrf_token')
+        fetch('http://10.132.76.200:3000/csrf_token')
         .then(response => response.text())
         .then(token => {
             document.getElementById('csrfField').value = token.trim();
